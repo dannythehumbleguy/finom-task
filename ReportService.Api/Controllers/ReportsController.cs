@@ -7,20 +7,21 @@ using ReportService.BusinessLogic.Services;
 namespace ReportService.Controllers;
 
 /// <summary>
-/// Контроллер для генерации отчётов по зарплатам сотрудников.
+/// Controller for generating employee salary reports.
 /// </summary>
 [Route("api/[controller]")]
 public class ReportsController(IDepartmentService departmentService, 
     IDepartmentsMonthReportGenerator departmentsMonthReportGenerator) : Controller
 {
     /// <summary>
-    /// Скачивает месячный отчёт по зарплатам всех департаментов.
+    /// Downloads a monthly salary report for all departments.
     /// </summary>
-    /// <param name="date">Дата отчёта (год и месяц).</param>
-    /// <returns>Текстовый файл с отчётом.</returns>
+    /// <param name="date">Report date (year and month).</param>
+    /// <returns>A text file containing the report.</returns>
     /// <remarks>
-    /// Пример запроса: GET /api/reports/2025/12
+    /// Example request: GET /api/reports/2025/12
     /// </remarks>
+
     [HttpGet]
     [Route("{year}/{month}")]
     public async Task<FileStreamResult> Download(DateOnly date)
