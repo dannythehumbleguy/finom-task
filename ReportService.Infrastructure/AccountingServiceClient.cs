@@ -1,4 +1,4 @@
-﻿using ReportService.BusinessLogic.Abstractions;
+using ReportService.BusinessLogic.Abstractions;
 
 namespace ReportService.Infrastructure;
 

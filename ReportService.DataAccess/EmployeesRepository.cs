@@ -1,11 +1,12 @@
-﻿using Dapper;
+using Dapper;
+using Microsoft.Extensions.Logging;
 using ReportService.BusinessLogic.Abstractions;
 using ReportService.BusinessLogic.Entities;
 using ReportService.DataAccess.Common;
 
 namespace ReportService.DataAccess;
 
-public class DepartmentRepository(IDbConnectionFactory connectionFactory) : IDepartmentRepository
+public class DepartmentRepository(IDbConnectionFactory connectionFactory, ILogger<DepartmentRepository> logger) : IDepartmentRepository
 {
     public async Task<List<Department>> GetDepartments()
     {

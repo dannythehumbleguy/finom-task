@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using ReportService.BusinessLogic.Abstractions;
 using ReportService.BusinessLogic.Configuration;
 using ReportService.BusinessLogic.Entities;
@@ -14,7 +15,8 @@ public class DepartmentService(IDepartmentRepository departmentRepository,
     IAccountingServiceClient accountingServiceClient, 
     ISalaryServiceClient salaryServiceClient,
     ICache cache,
-    IOptions<CacheOptions> cacheOptions) : IDepartmentService
+    IOptions<CacheOptions> cacheOptions,
+    ILogger<DepartmentService> logger) : IDepartmentService
 {
     
     public async Task<List<Department>> GetDepartments()
@@ -41,10 +43,13 @@ public class DepartmentService(IDepartmentRepository departmentRepository,
         var buhCode = await cache.GetAsync<string>(buhCodeCacheKey);
         if (string.IsNullOrEmpty(buhCode))
         {
+            logger.LogInformation("Cache miss: {BuhCodeCacheKey}", buhCodeCacheKey);
             buhCode = await accountingServiceClient.GetBuhCode(inn);
             await cache.SetAsync(buhCodeCacheKey, buhCode, cacheOptions.Value.TimeToLive);
         }
-
+        else
+            logger.LogInformation("Cache hit: {BuhCodeCacheKey}", buhCodeCacheKey);
+        
         return buhCode;
     }
 }

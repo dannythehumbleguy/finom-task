@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.Extensions.Logging.Abstractions;
 using ReportService.BusinessLogic.Entities;
 using ReportService.BusinessLogic.ReportGenerators;
 
@@ -11,7 +12,8 @@ public class DepartmentsMonthReportGeneratorTests
     public DepartmentsMonthReportGeneratorTests()
     {
         CultureInfo.CurrentCulture = new CultureInfo("en-IE");
-        _generator = new DepartmentsMonthReportGenerator();
+        var logger = NullLogger<DepartmentsMonthReportGenerator>.Instance;
+        _generator = new DepartmentsMonthReportGenerator(logger);
     }
 
     [Fact]

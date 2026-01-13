@@ -12,8 +12,8 @@
 
 
 **TODO**
-1. Observability: logs, metrics, traces.
-2. Corner cases: a department has 0 employees, a report has 0 departments. 
+1. Observability: metrics, traces.
+2. Corner cases: a department has 0 employees, a report has 0 departments.
 3. Batching in case of performance issues. 
 4. Why don't we filter by the date parameter?
 5. Hangfire for not keeping http connection while generating a report and for observability.

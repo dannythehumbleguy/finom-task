@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+using System.Globalization;
+using Microsoft.Extensions.Logging;
 using ReportService.BusinessLogic.Entities;
 
 namespace ReportService.BusinessLogic.ReportGenerators;
@@ -8,11 +9,12 @@ public interface IDepartmentsMonthReportGenerator
     Stream Generate(DateOnly date, List<Department> departments);
 }
 
-public class DepartmentsMonthReportGenerator : IDepartmentsMonthReportGenerator
+public class DepartmentsMonthReportGenerator(ILogger<DepartmentsMonthReportGenerator> logger) : IDepartmentsMonthReportGenerator
 {
     public Stream Generate(DateOnly date, List<Department> departments)
     {
-        var report = new Report(date.ToString("MMMM yyyy", CultureInfo.CurrentCulture));
+        var reportTitle = date.ToString("MMMM yyyy", CultureInfo.CurrentCulture);
+        var report = new Report(reportTitle);
         
         foreach (var department in departments)
         {
@@ -43,6 +45,9 @@ public class DepartmentsMonthReportGenerator : IDepartmentsMonthReportGenerator
         var total = departments.Sum(u => u.EmployeeSalary);
         report.Money(total);
         
-        return report.Save();
+        var stream = report.Save();
+        logger.LogInformation("Report generation completed successfully. Total departments: {DepartmentCount}, Total salary: {TotalSalary}", departments.Count, total);
+        
+        return stream;
     }
 }

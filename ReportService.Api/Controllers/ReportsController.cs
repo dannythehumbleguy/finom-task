@@ -1,6 +1,8 @@
-﻿using System;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ReportService.BusinessLogic.ReportGenerators;
 using ReportService.BusinessLogic.Services;
 
@@ -11,7 +13,8 @@ namespace ReportService.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 public class ReportsController(IDepartmentService departmentService, 
-    IDepartmentsMonthReportGenerator departmentsMonthReportGenerator) : Controller
+    IDepartmentsMonthReportGenerator departmentsMonthReportGenerator,
+    ILogger<ReportsController> logger) : Controller
 {
     /// <summary>
     /// Downloads a monthly salary report for all departments.
@@ -24,10 +27,14 @@ public class ReportsController(IDepartmentService departmentService,
 
     [HttpGet]
     [Route("{year}/{month}")]
-    public async Task<FileStreamResult> Download(DateOnly date)
+    public async Task<FileStreamResult> Download([Required] DateOnly date)
     {
+        logger.LogInformation("Starting report generation for date: {Date}", date);
+        
         var departments = await departmentService.GetDepartments(); // no batching?
         var report = departmentsMonthReportGenerator.Generate(date, departments);
+        
+        logger.LogInformation("Report generation completed successfully for date: {Date}", date);
 
         return File(report, "application/octet-stream", $"DepartmentsMonthReport_{date:yyy_MM_dd}.txt");
     }
