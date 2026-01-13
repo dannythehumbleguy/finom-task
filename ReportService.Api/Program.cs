@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReportService.AspNetCore;
@@ -19,6 +18,7 @@ builder.Services.AddSingleton<IDbConnectionFactory>(sp =>
     new NpgsqlConnectionFactory(sp.GetRequiredService<IConfiguration>().GetConnectionString("Default")) );
 
 builder.Services.Configure<CacheOptions>(builder.Configuration.GetSection("CacheSettings"));
+builder.Services.Configure<ExternalServicesOptions>(builder.Configuration.GetSection("ExternalServices"));
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -31,10 +31,15 @@ builder.Services.AddScoped<IDepartmentsMonthReportGenerator, DepartmentsMonthRep
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
+var externalServicesOptions = builder.Configuration.GetSection("ExternalServices").Get<ExternalServicesOptions>();
 builder.Services.AddHttpClient<IAccountingServiceClient, AccountingServiceClient>(client =>
-{ client.BaseAddress = new Uri("http://buh.local/api/"); });
+{ 
+    client.BaseAddress = new Uri(externalServicesOptions?.AccountingServiceUrl ?? string.Empty); 
+});
 builder.Services.AddHttpClient<ISalaryServiceClient, SalaryServiceClient>(client =>
-{ client.BaseAddress = new Uri("http://salary.local/api/"); });
+{ 
+    client.BaseAddress = new Uri(externalServicesOptions?.SalaryServiceUrl ?? string.Empty); 
+});
 
 
 

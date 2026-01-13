@@ -24,15 +24,7 @@ public class DepartmentService(IDepartmentRepository departmentRepository,
         {
             foreach (var employee in department.Employees)
             {
-                var buhCodeCacheKey = $"buhcode:{employee.Inn}";
-                var buhCode = await cache.GetAsync<string>(buhCodeCacheKey);
-        
-                if (string.IsNullOrEmpty(buhCode))
-                {
-                    buhCode = await accountingServiceClient.GetBuhCode(employee.Inn);
-                    await cache.SetAsync(buhCodeCacheKey, buhCode, cacheOptions.Value.TimeToLive);
-                }
-                
+                var buhCode = await GetBuhCode(employee.Inn);
                 employee.BuhCode = buhCode;
                 
                 var salary = await salaryServiceClient.GetSalary(employee.Inn, buhCode);
@@ -41,5 +33,18 @@ public class DepartmentService(IDepartmentRepository departmentRepository,
         }
         
         return  departments;
+    }
+
+    private async Task<string> GetBuhCode(string inn)
+    {
+        var buhCodeCacheKey = $"buhcode:{inn}";
+        var buhCode = await cache.GetAsync<string>(buhCodeCacheKey);
+        if (string.IsNullOrEmpty(buhCode))
+        {
+            buhCode = await accountingServiceClient.GetBuhCode(inn);
+            await cache.SetAsync(buhCodeCacheKey, buhCode, cacheOptions.Value.TimeToLive);
+        }
+
+        return buhCode;
     }
 }
