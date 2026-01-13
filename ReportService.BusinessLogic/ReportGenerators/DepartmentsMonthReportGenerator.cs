@@ -29,7 +29,8 @@ public class DepartmentsMonthReportGenerator : IDepartmentsMonthReportGenerator
                 report.NewLine();
             }  
             report.NewLine();
-            report.Text("Total for department: ", Styles.Bold);
+            report.Text("Total for department:", Styles.Bold);
+            report.Space();
             report.Money(department.EmployeeSalary);
             report.NewLine();
             report.NewLine();
@@ -37,7 +38,8 @@ public class DepartmentsMonthReportGenerator : IDepartmentsMonthReportGenerator
         
         report.HorizonalLine();
         report.NewLine();
-        report.Text("Total for the company: ", Styles.Bold);
+        report.Text("Total for the company:", Styles.Bold);
+        report.Space();
         var total = departments.Sum(u => u.EmployeeSalary);
         report.Money(total);
         
