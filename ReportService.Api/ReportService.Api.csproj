@@ -19,7 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ReportService.BusinessLogic\ReportService.BusinessLogic.csproj" />
     <ProjectReference Include="..\ReportService.DataAccess\ReportService.DataAccess.csproj" />
-    <ProjectReference Include="..\ReportService.Integrations\ReportService.Integrations.csproj" />
+    <ProjectReference Include="..\ReportService.Infrastructure\ReportService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

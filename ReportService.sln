@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.DataAccess", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.BusinessLogic", "ReportService.BusinessLogic\ReportService.BusinessLogic.csproj", "{E1DA4C17-0E89-403A-A5B5-02E00DE33463}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.Integrations", "ReportService.Integrations\ReportService.Integrations.csproj", "{44C72408-E135-4FF0-A0BD-FEE02A6B5F56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.Infrastructure", "ReportService.Infrastructure\ReportService.Infrastructure.csproj", "{44C72408-E135-4FF0-A0BD-FEE02A6B5F56}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C062C89A-3495-4AB2-8AD0-A84DA78A4D73}"
 EndProject

@@ -1,6 +1,6 @@
 ﻿using ReportService.BusinessLogic.Abstractions;
 
-namespace ReportService.Clients;
+namespace ReportService.Infrastructure;
 
 public class AccountingServiceClient(HttpClient http) : IAccountingServiceClient
 {

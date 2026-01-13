@@ -8,10 +8,9 @@ using ReportService.BusinessLogic.Abstractions;
 using ReportService.BusinessLogic.Configuration;
 using ReportService.BusinessLogic.ReportGenerators;
 using ReportService.BusinessLogic.Services;
-using ReportService.Clients;
 using ReportService.DataAccess;
 using ReportService.DataAccess.Common;
-using ReportService.Integrations;
+using ReportService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

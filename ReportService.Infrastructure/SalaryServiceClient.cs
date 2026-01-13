@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
 using ReportService.BusinessLogic.Abstractions;
 
-namespace ReportService.Clients;
+namespace ReportService.Infrastructure;
 
 public class SalaryServiceClient(HttpClient http) : ISalaryServiceClient
 {

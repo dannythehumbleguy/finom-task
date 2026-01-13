@@ -1,14 +1,9 @@
-using System;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using ReportService.BusinessLogic.Abstractions;
 
-namespace ReportService.Integrations;
+namespace ReportService.Infrastructure;
 
-/// <summary>
-/// Реализация кэша на основе Redis через IDistributedCache.
-/// </summary>
 public class RedisCache(IDistributedCache distributedCache) : ICache
 {
     private static readonly JsonSerializerOptions JsonOptions = new()
